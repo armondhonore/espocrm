@@ -1,0 +1,29 @@
+application:
+  name: espocrm
+  pods:
+  - name: app
+    image: espocrm/espocrm:latest
+    path: /
+    servicePorts:
+    - 80
+    vars:
+      ESPOCRM_DATABASE_HOST: mysql.pod
+      ESPOCRM_DATABASE_NAME: espocrm
+      ESPOCRM_DATABASE_USER: espocrm
+      ESPOCRM_DATABASE_PASSWORD: espocrm
+      ESPOCRM_SITE_URL: "https://relaxed-weasel-espocrm.cloud.nexlayer.ai"
+      ESPOCRM_ADMIN_USERNAME: admin
+      ESPOCRM_ADMIN_PASSWORD: admin123
+  - name: mysql
+    image: mysql:8.0
+    servicePorts:
+    - 3306
+    vars:
+      MYSQL_DATABASE: espocrm
+      MYSQL_USER: espocrm
+      MYSQL_PASSWORD: espocrm
+      MYSQL_ROOT_PASSWORD: rootpassword
+    volumes:
+    - name: espocrm-db
+      mountPath: /var/lib/mysql
+      size: 10Gi
